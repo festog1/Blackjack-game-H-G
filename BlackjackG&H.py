@@ -30,7 +30,7 @@ elif osztobot[0] == 12:
     osztobot[0] = "dáma"
     osztobotvalues[0] = 10
 elif osztobot[0] == 13:
-    osztobotvalues[0] = "király"
+    osztobot[0] = "király"
     osztobotvalues[0] = 10
 elif osztobot[0] == 14:
     osztobot[0] = "ász"
