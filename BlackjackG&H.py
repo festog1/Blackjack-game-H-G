@@ -1,122 +1,111 @@
 import random
-values = []
-usercard = []
-osztobot = []
-osztobotvalues = []
-for i in range(2):
-    x = random.randint(2,14)
-    usercard.append(x)
-    values.append(x)
-for i in range(2):
-    x = random.randint(2,14)
-    osztobot.append(x)
-    osztobotvalues.append(x)
-if osztobot[1] == 11:
-    osztobot[1] = "bubi"
-    osztobotvalues[1] = 10
-elif osztobot[1] == 12:
-    osztobot[1] = "dáma"
-    osztobotvalues[1] = 10
-elif osztobot[1] == 13:
-    osztobot[1] = "király"
-    osztobotvalues[1] = 10
-elif osztobot[1] == 14:
-    osztobot[1] = "ász"
-    osztobotvalues[1] = 10
-if osztobot[0] == 11:
-    osztobot[0] = "bubi"
-    osztobotvalues[0] = 10
-elif osztobot[0] == 12:
-    osztobot[0] = "dáma"
-    osztobotvalues[0] = 10
-elif osztobot[0] == 13:
-    osztobot[0] = "király"
-    osztobotvalues[0] = 10
-elif osztobot[0] == 14:
-    osztobot[0] = "ász"
-    osztobotvalues[0] = 10
-
-if usercard[1] == 11:
-    usercard[1] = "bubi"
-    values[1] = 10
-elif usercard[1] == 12:
-    usercard[1] = "dáma"
-    values[1] = 10
-elif usercard[1] == 13:
-    usercard[1] = "király"
-    values[1] = 10
-elif usercard[1] == 14:
-    usercard[1] = "ász"
-    values[1] = 10
-if usercard[0] == 11:
-    usercard[0] = "bubi"
-    values[0] = 10
-elif usercard[0] == 12:
-    usercard[0] = "dáma"
-    values[0] = 10
-elif usercard[0] == 13:
-    usercard[0] = "király"
-    values[0] = 10
-elif usercard[0] == 14:
-    usercard[0] = "ász"
-    values[0] = 10
-print(f"A te kártyáid: {usercard[0]}, {usercard[1]}.")
-print(f"Az osztóbot első lapja {osztobot[0]}, a második letakarva!")
-osztas = osztobotvalues[0]+ osztobotvalues[1]
-player = values[0]+values[1]
-turn = 1
-while player<21:
-    turn +=1
-    print("A lehetőségeid: Hit(Kérsz még lapot) vagy Stand/stay(Nem kérsz lapot, értékelsés.)")
-    valasz = input("Mit lépsz? (Hit/Stand) : ").lower()
-    if valasz == "hit":
-        usercard.append(random.randint(2,14))
-        values = usercard
-        if usercard[2] == 11:
-            usercard[2] = "bubi"
-            values[2] = 10
-        elif usercard[2] == 12:
-            usercard[2] = "dáma"
-            values[2] = 10
-        elif usercard[2] == 13:
-            usercard[2] = "király"
-            values[2] = 10
-        elif usercard[2] == 14:
-            usercard[2] = "ász"
-            values[2] = 10
-        print(f"A te kártyáid: {usercard}.")
-        player += values[turn]
-    elif valasz == "stay" or "stand":
-        if osztas > player:
-            print("Vesztettél!")
-            print(f"Az osztó kártyái {osztobot}, összege: {osztas}")
-        elif osztas > 21:
-            print("Vesztettél")
-            print(f"Az osztó kártyái {osztobot}, összege: {osztas}")
-
-        else:
-            print("Nyertél")
-            print(f"Az osztó kártyái {osztobot}, összege: {osztas}")
-            break
+import os
+import classes
+money = 10000
+while money > 0:
+    print(f"A pénzed: {money}")
+    tet = int(input("Mennyi pénzt szeretnél feltenni?: "))
+    if tet <= 0:
+        print("Akkor kimaradsz!")
+        game = False
     else:
-        print("what?")
-    if osztas<16:
-        print("Az osztó kártyáinak értéke 16 alatt volt és húzott!")
-        osztobot.append(random.randint(2,14))
-        osztobotvalues = osztobot
-        if osztobot[2] == 11:
-            osztobot[2] = "bubi"
-            osztobotvalues[2] = 10
-        elif osztobot[2] == 12:
-            osztobot[2] = "dáma"
-            osztobotvalues[2] = 10
-        elif osztobot[2] == 13:
-            osztobot[2] = "király"
-            osztobotvalues[2] = 10
-        elif osztobot[2] == 14:
-            osztobot[2] = "ász"
-            osztobotvalues[2] = 10
-        osztas += osztobotvalues[turn]
-if player >21:
-    print("Vesztettél!")
-    print(f"Az osztó kártyái {osztobot}, összege: {osztas}")
+        screen = [
+            ['🟩','🟩','🟩','🟩','🟩'],
+            ['🟩','🟩','🟩','🟩','🟩'],
+            ['🟩','🟩','🟩','🟩','🟩'],
+            ['🟩','🟩','🟩','🟩','🟩'],
+            ['🟩','🟩','🟩','🟩','🟩'],
+            ['🟩','🟩','🟩','🟩','🟩'],
+            ['🟩','🟩','🟩','🟩','🟩']
+        ]
+        values = []
+        usercard = []
+        osztobot = []
+        osztobotvalues = []
+
+        for i in range(2):
+            x = random.randint(2,14)
+            usercard.append(x)
+            values.append(x)
+        for i in range(2):
+            x = random.randint(2,14)
+            osztobot.append(x)
+            osztobotvalues.append(x)
+        classes.osztalyom.kartyanevek(osztobotvalues,osztobot,1)
+        classes.osztalyom.kartyanevek(osztobotvalues,osztobot,0)
+        classes.osztalyom.kartyanevek(values,usercard,1)
+        classes.osztalyom.kartyanevek(values,usercard,0)
+        ten = 0
+        if usercard[0] == 10:
+            ten = 5
+
+        classes.osztalyom.card(usercard[0], 0,screen)
+        classes.osztalyom.novel_x(screen)
+        classes.osztalyom.card(usercard[1], 6 + ten,screen)
+        classes.osztalyom.nyom(screen)
+        print(f"A te kártyáid: {usercard[0]}, {usercard[1]}.")
+        print(f"Az osztóbot első lapja {osztobot[0]}, a második letakarva!")
+        enemyscreen = [
+            ['🟩','🟩','🟩','🟩','🟩'],
+            ['🟩','🟩','🟩','🟩','🟩'],
+            ['🟩','🟩','🟩','🟩','🟩'],
+            ['🟩','🟩','🟩','🟩','🟩'],
+            ['🟩','🟩','🟩','🟩','🟩'],
+            ['🟩','🟩','🟩','🟩','🟩'],
+            ['🟩','🟩','🟩','🟩','🟩']
+        ]
+        classes.osztalyom.enemycard(osztobot[0], 0,enemyscreen)
+        classes.osztalyom.enemynyom(enemyscreen)
+        osztas = osztobotvalues[0]+ osztobotvalues[1]
+        player = values[0]+values[1]
+        turn = 1
+        game = True
+        cards = 2
+        botcard = 2
+        while player<=21 and game == True:
+            turn +=1
+            print("A lehetőségeid: Hit(Kérsz még lapot) vagy Stand/stay(Nem kérsz lapot, értékelsés.)")
+            valasz = input("Mit lépsz? (Hit/Stand) : ").lower()
+            if valasz == "hit":
+                x = random.randint(2, 14)
+                usercard.append(x)
+                values.append(x)
+                classes.osztalyom.kartyanevek(values, usercard, -1)
+                if usercard[-2] == 10:
+                    ten += 5
+                classes.osztalyom.novel_x(screen)
+                classes.osztalyom.card(usercard[-1], (cards * 6) + ten,screen)
+                classes.osztalyom.nyom(screen)   
+                player += values[-1]
+                cards += 1
+                print(f"A te kártyáid: {usercard}.")
+            elif valasz == "stay" or valasz == "stand":
+                if osztas > player:
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    print("Vesztettél!")
+                    money -= tet
+                    print(f"Az osztó kártyái {osztobot}, összege: {osztas}")
+                    game = False
+                elif osztas > 21 or player > osztas:
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    print("Nyertél")
+                    money += tet*2
+                    print(f"Az osztó kártyái {osztobot}, összege: {osztas}")
+                    game = False
+            elif osztas == player:
+                print("Az osztás és a játékos kártyái egyenlőek!")
+            else:
+                print("what?")
+            if osztas<16:
+                print("Az osztó kártyáinak értéke 16 alatt volt és húzott!")
+                x = random.randint(2,14)
+                osztobot.append(x)
+                osztobotvalues.append(x)
+                classes.osztalyom.kartyanevek(osztobotvalues,osztobot,botcard)
+                osztas += osztobotvalues[turn]
+        if player >21:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print("Vesztettél!")
+            money -= int(tet)
+            print(f"Az osztó kártyái {osztobot}, összege: {osztas}") 
+print(f"A pénzed: {money}")
